@@ -7,6 +7,7 @@ class Application:
                             firefox_binary="C:/Program Files/Mozilla Firefox ESR/firefox.exe")
         self.wd.implicitly_wait(60)
 
+    #Login to the app
     def open_home_page(self):
         wd = self.wd
         wd.get("http://localhost/addressbook/")
@@ -23,6 +24,7 @@ class Application:
         wd.find_element_by_xpath("//form[@id='LoginForm']/input[3]").click()
         wd.find_element_by_css_selector("body").click()
 
+    # Groups
     def open_groups_page(self):
         wd = self.wd
         wd.find_element_by_link_text("groups").click()
@@ -50,6 +52,32 @@ class Application:
         wd = self.wd
         wd.find_element_by_link_text("group page").click()
 
+    #Contacts
+    def create_contact(self, contact):
+        wd = self.wd
+        # init contact creation
+        wd.find_element_by_link_text("add new").click()
+        # foll contact form
+        wd.find_element_by_name("firstname").click()
+        wd.find_element_by_name("firstname").clear()
+        wd.find_element_by_name("firstname").send_keys(contact.firstname)
+        wd.find_element_by_name("lastname").click()
+        wd.find_element_by_name("lastname").clear()
+        wd.find_element_by_name("lastname").send_keys(contact.lastname)
+        wd.find_element_by_name("address").click()
+        wd.find_element_by_name("address").clear()
+        wd.find_element_by_name("address").send_keys(contact.address)
+        wd.find_element_by_name("mobile").click()
+        wd.find_element_by_name("mobile").clear()
+        wd.find_element_by_name("mobile").send_keys(contact.mobile)
+        wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        self.return_to_contacts_page()
+
+    def return_to_contacts_page(self):
+        wd = self.wd
+        wd.find_element_by_link_text("home").click()
+
+    #Logout from the app
     def logout(self):
         wd = self.wd
         wd.find_element_by_link_text("Logout").click()
